@@ -111,7 +111,12 @@
 		
 		.botnav {
 			position:fixed;
-			bottom:10px;
+			bottom:15px;
+			color: #444;
+		}
+		
+		.botnav a{
+			color: #444;
 		}
 
 		/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -145,7 +150,22 @@
 		  outline: none;
 		  transition: 0.4s;
 		  display:block
-		}		
+		}	
+
+		.header {
+		  background-color: #eee;
+		  color: #444;
+		  cursor: pointer;
+		  padding: 18px;
+		  width: 100%;
+		  text-align: left;
+		  border: none;
+		  outline: none;
+		  transition: 0.4s;
+		  display:block;
+		  margin-bottom:15px;
+		}
+
 
 		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 		.active, .accordion:hover {
@@ -363,7 +383,7 @@ if (r && r.length == 2) {
 			<main>
 			  <div class="wrapper">
 				<article class="flow">
-				  <h1>${title}</h1>
+				  <h1 class="header">${title}</h1>
 				  ${content}
 				</article>
 			  </div>
