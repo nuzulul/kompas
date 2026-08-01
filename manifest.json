@@ -1,0 +1,62 @@
+{
+  "id": "Kompas",
+  "background_color": "#ffffff",
+  "description": "Kompetensi Panduan Staf",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Kompas",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Kompas",
+  "start_url": "/",
+  "theme_color": "#97DDE9",
+  "categories": [
+    "tools"
+  ],
+  "screenshots": [
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "1408x768",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "form_factor": "narrow"
+    } 	
+  ],
+  "icons": [
+      {
+          "src": "/icon.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "any"
+      }
+  ],
+  "capture_links": "existing-client-navigate",
+  "url_handlers": [
+    {
+      "origin": "https://getkompas.netlify.app"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+kompas",
+      "url": "/?kompas=%s"
+    }
+  ],
+  "intent_filters": [
+    {
+      "scope_url_scheme": "https",
+      "scope_url_host": "getkompas.netlify.app",
+      "scope_url_path": "/"
+    }
+  ],
+  "related_applications": [{
+    "platform": "webapp",
+    "url": "https://getkompas.netlify.app/manifest.json"
+  }],
+  "lang": "id"
+}

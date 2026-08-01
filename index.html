@@ -4,6 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="icon.png">
+	<link rel="manifest" href="manifest.json" />
 	<title>KOMPAS</title>
 	<style>
 	
@@ -219,6 +221,14 @@
 </head>
 
 <body translate="no">
+
+<div id="install-btn" style="background: rgba(0, 0, 0, 0.8);position: fixed;z-index: 10000;align-items: center;justify-content: center;display: flex;flex-direction:column;bottom: 0;left: 0;right: 0;top: 0;    background-image: url();background-size: cover;background-position: center top;">
+  <div style="background:#fff;display: flex;flex-direction:column;margin: auto;align-items: center;justify-content: center;padding:20px 20px;">
+    <img src="logo.png" style="width:200px;height:300px;object-fit: contain;background-image:none;">
+    <p style="font-size:16px;font-weight:bold;text-align:center;width:300px;margin-top:15px;margin-bottom:2px;display:none;">KOMPAS</p>
+    <p><button class="kompas-install" target="_blank">Install</button></p>
+  </div>
+</div>
 
 <div id="mySidebar" class="sidebar" onclick="closeNav()">
   <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a> -->
@@ -453,6 +463,69 @@ for (i = 0; i < acc.length; i++) {
       panel.style.maxHeight = panel.scrollHeight + "px";
     }
   });
+}
+
+
+// Variable to store the intercepted browser prompt
+let deferredPrompt; 
+const installBtn = document.getElementById('install-btn');
+
+// 1. Listen for the browser's built-in install invitation
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent older Chrome versions from automatically showing the prompt
+  e.preventDefault();
+  
+  // Save the event so it can be triggered later
+  deferredPrompt = e;
+  
+  // Unhide your custom install button
+  installBtn.style.display = 'block';
+});
+
+// 2. Handle the user clicking your custom button
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  
+  // Show the native browser install prompt
+  deferredPrompt.prompt();
+  
+  // Wait for the user to accept or dismiss the prompt
+  const { outcome } = await deferredPrompt.userChoice;
+  console.log(`User response to the install prompt: ${outcome}`);
+  
+  // Reset the deferred prompt variable; it can only be used once
+  deferredPrompt = null;
+  
+  // Hide your custom button again
+  installBtn.style.display = 'none';
+});
+
+// 3. Optional: Hide button if the app is successfully installed
+window.addEventListener('appinstalled', () => {
+  console.log('PWA was successfully installed!');
+  installBtn.style.display = 'none';
+  deferredPrompt = null;
+});
+
+// Check if the app is running standalone (installed)
+if (window.matchMedia('(display-mode: standalone)').matches) {
+  installBtn.style.display = 'none';
+}
+
+if ((window.location.href.indexOf("localhost") > -1)||(window.location.href.indexOf("127.0.0.1") > -1)) 
+{
+	installBtn.style.display = 'none';
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/sw.js")
+    .then(serviceWorker => {
+      console.log("Service Worker registered: ", serviceWorker);
+    })
+    .catch(error => {
+      console.error("Error registering the Service Worker: ", error);
+    });
 }
 </script>
   
