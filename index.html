@@ -140,6 +140,19 @@
 		  display:block
 		}
 		
+		.topnav {
+		  background-color: #eee;
+		  color: #444;
+		  cursor: pointer;
+		  padding: 18px;
+		  width: 100%;
+		  text-align: left;
+		  border: none;
+		  outline: none;
+		  transition: 0.4s;
+		  display:block
+		}		
+		
 		.list {
 		  background-color: none;
 		  color: #444;
@@ -192,6 +205,14 @@
 
 		.active:after {
 		  content: "\2796"; /* Unicode character for "minus" sign (-) */
+		}	
+
+		.topnav:after, .list:after {
+		  content: '\21AA';
+		  font-size: 13px;
+		  color: #777;
+		  float: right;
+		  margin-left: 5px;
 		}		
 	</style>	
 </head>
@@ -330,7 +351,7 @@ if (r && r.length == 2) {
 	
 	let source = [];
 	
-	rows.filter(itema => itema[4] === "menu").forEach(itemb => {
+	rows.filter(itema => itema[6] === "top").forEach(itemb => {
 		
 		
 		const id = itemb[0];
@@ -339,22 +360,31 @@ if (r && r.length == 2) {
 		const parent = itemb[6];
 		const content = itemb[7];
 		
-		let html = `<a href="#" class="accordion">${title}</a><div class="panel"><p>`;
+		if(type === "menu"){
 		
-		rows.filter(itemc => itemc[6] === id).forEach(itemd => {
-			const id = itemd[0];
-			const type = itemd[4];
-			const title = itemd[5];
-			const parent = itemd[6];
-			const content = itemd[7];
+			let html = `<a href="#" class="accordion">${title}</a><div class="panel"><p>`;
+			
+			rows.filter(itemc => itemc[6] === id).forEach(itemd => {
+				const id = itemd[0];
+				const type = itemd[4];
+				const title = itemd[5];
+				const parent = itemd[6];
+				const content = itemd[7];
 
-			let list = `<a href="#${id}" class="list">${title}</a>`;
-			html += list;
-		})
+				let list = `<a href="#${id}" class="list">${title}</a>`;
+				html += list;
+			})
+			
+			html += `</p></div>`;
+			nav += html;
+		}
 		
-		html += `</p></div>`;
+		if(type === "post"){
+			let html = `<a href="#${id}" class="topnav">${title}</a><div class="panel"><p>`;
+			nav += html;
+		}
 		
-		nav += html;
+		
 		
 	});
 	
@@ -367,7 +397,7 @@ if (r && r.length == 2) {
 			  ${nav}
 			</article>
 			<div class="credit" style="position:fixed;bottom:0px;left:0px;display:flex; width:100%;background:#ccc;height:40px;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;font-size:0.5em">
-				<img src="rsudkoesnadi.jpeg" style="width:20px;height:20px;border-radius:50% 50% 50% 50%">&nbsp;&nbsp;Tim R. Seruni RSUD H. Koesnadi Bondowoso
+				<img src="rsudkoesnadi.jpeg" style="width:20px;height:20px;border-radius:50% 50% 50% 50%">&nbsp;&nbsp;Ruang Seruni RSUD H. Koesnadi Bondowoso
 			</div>
 		  </div>
 		</main>
