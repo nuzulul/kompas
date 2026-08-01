@@ -497,19 +497,20 @@ installBtn.addEventListener('click', async () => {
   deferredPrompt = null;
   
   // Hide your custom button again
-  //installBtn.style.display = 'none';
+  installBtn.style.display = 'none';
 });
 
 // 3. Optional: Hide button if the app is successfully installed
 window.addEventListener('appinstalled', () => {
   console.log('PWA was successfully installed!');
-  //installBtn.style.display = 'none';
+  installBtn.style.display = 'none';
   deferredPrompt = null;
 });
 
 // Check if the app is running standalone (installed)
 if (window.matchMedia('(display-mode: standalone)').matches) {
   installBtn.style.display = 'none';
+  document.getElementById('welcome-display').style.display = 'none';
 }
 
 if ((window.location.href.indexOf("localhost") > -1)||(window.location.href.indexOf("127.0.0.1") > -1)) 
