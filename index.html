@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>KOMPAS</title>
 	<style>
 	
 		/* Reset */
@@ -206,7 +207,7 @@
 <div id="main">
 <!-- <button class="openbtn" onclick="openNav()">☰</button>  -->
 <div id="view" onclick="closeNav()">   
-	<my-router initial-route="home" id="router">
+	<!--<my-router initial-route="home" id="router">
 	  <div id="home">
 		<main>
 		  <div class="wrapper">
@@ -229,7 +230,8 @@
 		  </div>
 		</main>
 	  </div>
-	</my-router>
+	</my-router>-->
+	Loading ...
 </div>
 </div>
 
@@ -287,9 +289,9 @@ class MyRouter extends HTMLElement {
 
 customElements.define("my-router", MyRouter);  
 
-router.handler = (resolve, { previous, next }) => {
-  document.startViewTransition?.(resolve) || resolve();
-};
+//router.handler = (resolve, { previous, next }) => {
+  //document.startViewTransition?.(resolve) || resolve();
+//};
 
 function openNav() {
   document.getElementById("mySidebar").style.width = "250px";
@@ -364,6 +366,9 @@ if (r && r.length == 2) {
 			  <img src="logo.png" width="100%">
 			  ${nav}
 			</article>
+			<div class="credit" style="position:fixed;bottom:0px;left:0px;display:flex; width:100%;background:#ccc;height:40px;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;font-size:0.5em">
+				<img src="rsudkoesnadi.jpeg" style="width:20px;height:20px;border-radius:50% 50% 50% 50%">&nbsp;&nbsp;Tim R. Seruni RSUD H. Koesnadi Bondowoso
+			</div>
 		  </div>
 		</main>
 	  </div>	
@@ -386,8 +391,10 @@ if (r && r.length == 2) {
 				  <h1 class="header">${title}</h1>
 				  ${content}
 				</article>
+				<div class="credit" style="position:fixed;bottom:0px;left:0px;display:flex; width:100%;background:#ccc;height:40px;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;font-size:1em">
+					<a href="#home">Kembali</a>
+				</div>
 			  </div>
-			  <div class="botnav"><a href="#home">Kembali</a></div>
 			</main>
 		  </div>		
 		`;
