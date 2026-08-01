@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body translate="no">
+  <my-router initial-route="home" id="router">
+  <div id="home">
+    <main>
+      <div class="wrapper">
+        <article class="flow">
+          <h1>Home</h1>
+          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.</p>
+          <p><a href="#other">Another page</a></p>
+        </article>
+      </div>
+    </main>
+  </div>
+  <div id="other">
+    <main>
+      <div class="wrapper">
+        <article class="flow">
+          <h1>Secondary page</h1>
+          <p>Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+          <p><a href="#home">Home</a></p>
+        </article>
+      </div>
+    </main>
+  </div>
+</my-router>
+
+<script>
+class MyRouter extends HTMLElement {
+  constructor() {
+    super();
+  }
+  #currentPage = null;
+  #pages = null;
+  #controller = null;
+
+  #showPage(page) {
+    this.#pages.forEach((pageEl) => pageEl.style.display = 'none');
+    this.#pages.get(page).style.display = 'block';
+    this.#currentPage = page;
+  }
+  #addPages() {
+    [...this.children].forEach((page) => {
+      this.#pages.set(page.id, page);
+    });
+  }
+  #addClickHandler() {
+    document.addEventListener("click", (event) => {
+      if (event.target.tagName !== "A") return;
+      let newPage = event.target.getAttribute("href");
+      if(!newPage.startsWith('#')) return;
+      event.preventDefault();
+      newPage = newPage.replace('#', '');
+      if (this.handler) {
+        this.handler(
+          () => {
+            if (this.#pages.has(newPage)) this.#showPage(newPage);
+          },
+          { previous: this.#currentPage, next: newPage }
+        );
+      } else {
+
+        if (this.#pages.has(newPage)) this.#showPage(newPage);
+      }
+    }, {singal: this.#controller.signal});
+  }
+  connectedCallback() {
+    this.#pages = new Map();
+    this.#controller = new AbortController();
+    this.#addPages();
+    this.#showPage(this.getAttribute("initial-route"));
+    this.#addClickHandler();
+  }
+  
+  disconnectedCallback() {
+    this.#controller.abort();
+  }
+}
+
+customElements.define("my-router", MyRouter);  
+
+router.handler = (resolve, { previous, next }) => {
+  document.startViewTransition?.(resolve) || resolve();
+};
+</script>
+
+  
+</body>
+
+</html>
