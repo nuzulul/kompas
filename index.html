@@ -104,10 +104,11 @@
 		#main {
 		  transition: margin-left .5s;
 		  padding: 16px 16px;
+		  margin-bottom:50px;
 		}
 		
 		#view {
-		  padding: 16px 16px;
+		  margin-top: 16px;
 		}	
 		
 		.botnav {
@@ -219,14 +220,14 @@
 
 <body translate="no">
 
-<div id="mySidebar" class="sidebar top">
+<div id="mySidebar" class="sidebar" onclick="closeNav()">
   <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a> -->
   <a href="#home">Beranda</a>
   <!-- <a href="#other">Another page</a> -->
 </div>
 
 <div id="main">
-<!-- <button class="openbtn" onclick="openNav()">☰</button>  -->
+<button class="openbtn" onclick="openNav()">☰</button>
 <div id="view" onclick="closeNav()">   
 	<!--<my-router initial-route="home" id="router">
 	  <div id="home">
@@ -362,7 +363,7 @@ if (r && r.length == 2) {
 		
 		if(type === "menu"){
 		
-			let html = `<a href="#" class="accordion">${title}</a><div class="panel"><p>`;
+			let html = `<a href="#" class="accordion"><img src="rsudkoesnadi.jpeg" style="width:20px;height:20px;border-radius:50% 50% 50% 50%;position:relative;top:5px;">&nbsp;&nbsp;${title}</a><div class="panel"><p>`;
 			
 			rows.filter(itemc => itemc[6] === id).forEach(itemd => {
 				const id = itemd[0];
@@ -371,7 +372,7 @@ if (r && r.length == 2) {
 				const parent = itemd[6];
 				const content = itemd[7];
 
-				let list = `<a href="#${id}" class="list">${title}</a>`;
+				let list = `<a href="#${id}" class="list"><img src="rsudkoesnadi.jpeg" style="width:20px;height:20px;border-radius:50% 50% 50% 50%;position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
 				html += list;
 			})
 			
@@ -380,7 +381,7 @@ if (r && r.length == 2) {
 		}
 		
 		if(type === "post"){
-			let html = `<a href="#${id}" class="topnav">${title}</a><div class="panel"><p>`;
+			let html = `<a href="#${id}" class="topnav"><img src="rsudkoesnadi.jpeg" style="width:20px;height:20px;border-radius:50% 50% 50% 50%;position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
 			nav += html;
 		}
 		
@@ -418,11 +419,11 @@ if (r && r.length == 2) {
 			<main>
 			  <div class="wrapper">
 				<article class="flow">
-				  <h1 class="header">${title}</h1>
-				  ${content}
+				  <h1 class="header"><img src="rsudkoesnadi.jpeg" style="width:20px;height:20px;border-radius:50% 50% 50% 50%;position:relative;top:5px;">&nbsp;&nbsp;${title}</h1>
+				  <div style="white-space: pre-line;">${content}</div>
 				</article>
 				<div class="credit" style="position:fixed;bottom:0px;left:0px;display:flex; width:100%;background:#ccc;height:40px;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;font-size:1em">
-					<a href="#home">Kembali</a>
+					<a href="#home">&#x21A9; Kembali</a>
 				</div>
 			  </div>
 			</main>
