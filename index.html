@@ -455,17 +455,28 @@ for (i = 0; i < acc.length; i++) {
   });
 }
 
-document.querySelector('.post').addEventListener("click",()=>{
-	window.scrollTo({
-	  top: 0,
-	  behavior: 'smooth'
-	});
+document.querySelectorAll('.content img').forEach(el=>{
+	el.style.width = "100%";
+});
+
+let scroll;
+
+document.querySelectorAll('.post').forEach(el=>{
+	el.addEventListener("click",()=>{
+		window.scrollTo({
+		  top: 0,
+		  behavior: 'smooth'
+		});
+		scroll = window.scrollY;
+	})
 }) 
 
-document.querySelector('.back').addEventListener("click",()=>{
-	window.scrollTo({
-	  top: 0,
-	  behavior: 'smooth'
+document.querySelectorAll('.back').forEach(el=>{
+	el.addEventListener("click",()=>{
+		window.scrollTo({
+		  top: scroll,
+		  behavior: 'smooth'
+		});
 	});
 }) 
 
