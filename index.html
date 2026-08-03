@@ -357,7 +357,7 @@ if (r && r.length == 2) {
 		
 		if(type === "menu"){
 		
-			let html = `<a href="#" class="accordion"><img src="https://icons.getbootstrap.com/assets/icons/journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</a><div class="panel"><p>`;
+			let html = `<a href="#" class="accordion"><img src="journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</a><div class="panel"><p>`;
 			
 			rows.filter(itemc => itemc[6] === id).forEach(itemd => {
 				const id = itemd[0];
@@ -366,7 +366,7 @@ if (r && r.length == 2) {
 				const parent = itemd[6];
 				const content = itemd[7];
 
-				let list = `<a href="#${id}" class="list"><img src="https://icons.getbootstrap.com/assets/icons/journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
+				let list = `<a href="#${id}" class="list post"><img src="journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
 				html += list;
 			})
 			
@@ -375,7 +375,7 @@ if (r && r.length == 2) {
 		}
 		
 		if(type === "post"){
-			let html = `<a href="#${id}" class="topnav"><img src="https://icons.getbootstrap.com/assets/icons/journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
+			let html = `<a href="#${id}" class="topnav post"><img src="journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
 			nav += html;
 		}
 		
@@ -413,11 +413,11 @@ if (r && r.length == 2) {
 			<main>
 			  <div class="wrapper">
 				<article class="flow">
-				  <div class="header"><img src="https://icons.getbootstrap.com/assets/icons/journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</div>
+				  <div class="header"><img src="journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</div>
 				  <div style="white-space: pre-line;">${content}</div>
 				</article>
 				<div class="credit" style="position:fixed;bottom:0px;left:0px;display:flex; width:100%;height:40px;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;font-size:1em">
-					<a href="#home">&#x21A9; Kembali</a>
+					<a href="#home" class="back">&#x21A9; Kembali</a>
 				</div>
 			  </div>
 			</main>
@@ -448,6 +448,20 @@ for (i = 0; i < acc.length; i++) {
     }
   });
 }
+
+document.querySelector('.post').addEventListener("click",()=>{
+	window.scrollTo({
+	  top: 0,
+	  behavior: 'smooth'
+	});
+}) 
+
+document.querySelector('.back').addEventListener("click",()=>{
+	window.scrollTo({
+	  top: 0,
+	  behavior: 'smooth'
+	});
+}) 
 
 
 // Variable to store the intercepted browser prompt
