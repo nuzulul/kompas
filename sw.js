@@ -24,7 +24,7 @@ if (workbox.navigationPreload.isSupported()) {
   workbox.navigationPreload.enable();
 }
 
-self.addEventListener('fetch', (event) => {
+/*self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => {
       try {
@@ -44,4 +44,36 @@ self.addEventListener('fetch', (event) => {
       }
     })());
   }
+});*/
+
+// Intercept network requests
+self.addEventListener('fetch', (event) => {
+  // Only handle standard GET requests (avoid caching POST/PUT/DELETE)
+  if (event.request.method !== 'GET') return;
+
+  event.respondWith(
+    fetch(event.request)
+      .then((networkResponse) => {
+        // Check if the response is valid before caching
+        if (networkResponse.ok) {
+          const cacheCopy = networkResponse.clone();
+          caches.open(CACHE).then((cache) => {
+            cache.put(event.request, cacheCopy);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        // Network failed (offline), check the cache fallback
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          // Optional: Return a generic fallback offline page for HTML navigations
+          if (event.request.mode === 'navigate') {
+            return caches.match(offlineFallbackPage);
+          }
+        });
+      })
+  );
 });
