@@ -9,6 +9,11 @@
 	<title>KOMPAS</title>
 	<style>
 	
+		:root{
+			--bluedark:#9ACDEC;
+			--bluelight:#97DDE9;
+		}
+	
 		/* Reset */
 
 		*,*::before,*::after{
@@ -102,7 +107,7 @@
 		
 		/* Style the buttons that are used to open and close the accordion panel */
 		.accordion {
-		  background-color: #eee;
+		  background-color: var(--bluelight);
 		  color: #444;
 		  cursor: pointer;
 		  padding: 18px;
@@ -111,11 +116,12 @@
 		  border: none;
 		  outline: none;
 		  transition: 0.4s;
-		  display:block
+		  display:block;
+		  font-weight: bold;
 		}
 		
 		.topnav {
-		  background-color: #eee;
+		  background-color: var(--bluelight);
 		  color: #444;
 		  cursor: pointer;
 		  padding: 18px;
@@ -124,7 +130,8 @@
 		  border: none;
 		  outline: none;
 		  transition: 0.4s;
-		  display:block
+		  display:block;
+		  font-weight: bold;
 		}		
 		
 		.list {
@@ -137,11 +144,12 @@
 		  border: none;
 		  outline: none;
 		  transition: 0.4s;
-		  display:block
+		  display:block;
+		  font-weight: bold;
 		}	
 
 		.header {
-		  background-color: #eee;
+		  background-color: var(--bluelight);
 		  color: #444;
 		  cursor: pointer;
 		  padding: 18px;
@@ -152,12 +160,17 @@
 		  transition: 0.4s;
 		  display:block;
 		  margin-bottom:15px;
+		  font-weight: bold;
+		}
+		
+		.credit{
+			background:var(--bluelight);
 		}
 
 
 		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-		.active, .accordion:hover {
-		  background-color: #ccc;
+		.active, .accordion:hover, .topnav:hover {
+		  background-color: var(--bluedark);
 		}
 
 		/* Style the accordion panel. Note: hidden by default */
@@ -344,7 +357,7 @@ if (r && r.length == 2) {
 		
 		if(type === "menu"){
 		
-			let html = `<a href="#" class="accordion"><img src="menu.png" style="width:20px;height:20px;border-radius:50% 50% 50% 50%;position:relative;top:5px;">&nbsp;&nbsp;${title}</a><div class="panel"><p>`;
+			let html = `<a href="#" class="accordion"><img src="https://icons.getbootstrap.com/assets/icons/journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</a><div class="panel"><p>`;
 			
 			rows.filter(itemc => itemc[6] === id).forEach(itemd => {
 				const id = itemd[0];
@@ -353,7 +366,7 @@ if (r && r.length == 2) {
 				const parent = itemd[6];
 				const content = itemd[7];
 
-				let list = `<a href="#${id}" class="list"><img src="menu.png" style="width:20px;height:20px;border-radius:50% 50% 50% 50%;position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
+				let list = `<a href="#${id}" class="list"><img src="https://icons.getbootstrap.com/assets/icons/journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
 				html += list;
 			})
 			
@@ -362,7 +375,7 @@ if (r && r.length == 2) {
 		}
 		
 		if(type === "post"){
-			let html = `<a href="#${id}" class="topnav"><img src="menu.png" style="width:20px;height:20px;border-radius:50% 50% 50% 50%;position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
+			let html = `<a href="#${id}" class="topnav"><img src="https://icons.getbootstrap.com/assets/icons/journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</a>`;
 			nav += html;
 		}
 		
@@ -378,7 +391,7 @@ if (r && r.length == 2) {
 			  <img src="logo.png" width="100%">
 			  ${nav}
 			</article>
-			<div class="credit" style="position:fixed;bottom:0px;left:0px;display:flex; width:100%;background:#ccc;height:40px;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;font-size:0.5em">
+			<div class="credit" style="position:fixed;bottom:0px;left:0px;display:flex; width:100%;height:40px;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;font-size:0.5em">
 				<img src="rsudkoesnadi.jpeg" style="width:20px;height:20px;border-radius:50% 50% 50% 50%">&nbsp;&nbsp;Ruang Seruni RSUD Dr. H. Koesnadi Bondowoso
 			</div>
 		  </div>
@@ -400,10 +413,10 @@ if (r && r.length == 2) {
 			<main>
 			  <div class="wrapper">
 				<article class="flow">
-				  <h3 class="header"><img src="menu.png" style="width:20px;height:20px;border-radius:50% 50% 50% 50%;position:relative;top:5px;">&nbsp;&nbsp;${title}</h3>
+				  <div class="header"><img src="https://icons.getbootstrap.com/assets/icons/journal-check.svg" style="width:20px;height:20px;/*border-radius:50% 50% 50% 50%;*/position:relative;top:5px;">&nbsp;&nbsp;${title}</div>
 				  <div style="white-space: pre-line;">${content}</div>
 				</article>
-				<div class="credit" style="position:fixed;bottom:0px;left:0px;display:flex; width:100%;background:#ccc;height:40px;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;font-size:1em">
+				<div class="credit" style="position:fixed;bottom:0px;left:0px;display:flex; width:100%;height:40px;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;font-size:1em">
 					<a href="#home">&#x21A9; Kembali</a>
 				</div>
 			  </div>
