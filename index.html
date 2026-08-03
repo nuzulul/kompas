@@ -463,20 +463,22 @@ let scroll;
 
 document.querySelectorAll('.post').forEach(el=>{
 	el.addEventListener("click",()=>{
+		scroll = window.scrollY;
 		window.scrollTo({
 		  top: 0,
 		  behavior: 'smooth'
 		});
-		scroll = window.scrollY;
 	})
 }) 
 
 document.querySelectorAll('.back').forEach(el=>{
 	el.addEventListener("click",()=>{
-		window.scrollTo({
-		  top: scroll,
-		  behavior: 'smooth'
-		});
+		setTimeout(()=>{
+			window.scrollTo({
+			  top: scroll,
+			  behavior: 'smooth'
+			});
+		},100);
 	});
 }) 
 
