@@ -14,6 +14,7 @@
 			--bluedark:#9ACDEC;
 			--bluelight:#97DDE9;
 			--autosize: clamp(1rem, 2vw + 1rem, 3rem);
+			--autosizehalf: clamp(1rem, 1vw + 0.5rem, 3rem);
 		}
 	
 		/* Reset */
@@ -227,7 +228,7 @@
   <div style="background:#fff;display: flex;flex-direction:column;margin: auto;align-items: center;justify-content: center;padding:20px 20px;">
     <img src="logo.png" style="width:200px;height:300px;object-fit: contain;background-image:none;">
     <p style="font-size:16px;font-weight:bold;text-align:center;width:300px;margin-top:15px;margin-bottom:2px;display:none;">KOMPAS</p>
-    <p><button id="install-btn" style="display:none;" target="_blank">Install</button></p>
+    <p><button id="install-btn" style="display:none;font-size:var(--autosizehalf);" target="_blank">Install</button></p><p id="terinstall-info" style="display:none;font-size:var(--autosizehalf);">Install sukses</p>
   </div>
 </div>
 
@@ -345,6 +346,76 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidebar").style.width = "0";
   //document.getElementById("main").style.marginLeft= "0";
+}
+
+
+
+
+
+
+// Variable to store the intercepted browser prompt
+let deferredPrompt; 
+const installBtn = document.getElementById('install-btn');
+const terinstallInfo = document.getElementById('terinstall-info');
+
+// 1. Listen for the browser's built-in install invitation
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent older Chrome versions from automatically showing the prompt
+  e.preventDefault();
+  
+  // Save the event so it can be triggered later
+  deferredPrompt = e;
+  
+  // Unhide your custom install button
+  installBtn.style.display = 'block';
+});
+
+// 2. Handle the user clicking your custom button
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  
+  // Show the native browser install prompt
+  deferredPrompt.prompt();
+  
+  // Wait for the user to accept or dismiss the prompt
+  const { outcome } = await deferredPrompt.userChoice;
+  console.log(`User response to the install prompt: ${outcome}`);
+  
+  // Reset the deferred prompt variable; it can only be used once
+  deferredPrompt = null;
+  
+  // Hide your custom button again
+  installBtn.style.display = 'none';
+});
+
+// 3. Optional: Hide button if the app is successfully installed
+window.addEventListener('appinstalled', () => {
+  console.log('PWA was successfully installed!');
+  installBtn.style.display = 'none';
+  terinstallInfo.style.display = 'block';
+  deferredPrompt = null;
+});
+
+// Check if the app is running standalone (installed)
+if (window.matchMedia('(display-mode: standalone)').matches) {
+  installBtn.style.display = 'none';
+  document.getElementById('welcome-display').style.display = 'none';
+}
+
+if ((window.location.href.indexOf("localhost") > -1)||(window.location.href.indexOf("127.0.0.1") > -1)) 
+{
+	//document.getElementById('welcome-display').style.display = 'none';
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/sw.js")
+    .then(serviceWorker => {
+      console.log("Service Worker registered: ", serviceWorker);
+    })
+    .catch(error => {
+      console.error("Error registering the Service Worker: ", error);
+    });
 }
 
 </script>
@@ -511,68 +582,7 @@ document.querySelectorAll('.back').forEach(el=>{
 }) 
 
 
-// Variable to store the intercepted browser prompt
-let deferredPrompt; 
-const installBtn = document.getElementById('install-btn');
 
-// 1. Listen for the browser's built-in install invitation
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent older Chrome versions from automatically showing the prompt
-  e.preventDefault();
-  
-  // Save the event so it can be triggered later
-  deferredPrompt = e;
-  
-  // Unhide your custom install button
-  installBtn.style.display = 'block';
-});
-
-// 2. Handle the user clicking your custom button
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  
-  // Show the native browser install prompt
-  deferredPrompt.prompt();
-  
-  // Wait for the user to accept or dismiss the prompt
-  const { outcome } = await deferredPrompt.userChoice;
-  console.log(`User response to the install prompt: ${outcome}`);
-  
-  // Reset the deferred prompt variable; it can only be used once
-  deferredPrompt = null;
-  
-  // Hide your custom button again
-  installBtn.style.display = 'none';
-});
-
-// 3. Optional: Hide button if the app is successfully installed
-window.addEventListener('appinstalled', () => {
-  console.log('PWA was successfully installed!');
-  installBtn.style.display = 'none';
-  deferredPrompt = null;
-});
-
-// Check if the app is running standalone (installed)
-if (window.matchMedia('(display-mode: standalone)').matches) {
-  installBtn.style.display = 'none';
-  document.getElementById('welcome-display').style.display = 'none';
-}
-
-if ((window.location.href.indexOf("localhost") > -1)||(window.location.href.indexOf("127.0.0.1") > -1)) 
-{
-	document.getElementById('welcome-display').style.display = 'none';
-}
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("/sw.js")
-    .then(serviceWorker => {
-      console.log("Service Worker registered: ", serviceWorker);
-    })
-    .catch(error => {
-      console.error("Error registering the Service Worker: ", error);
-    });
-}
 </script>
   
 </body>
