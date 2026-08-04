@@ -404,19 +404,10 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
 
 if ((window.location.href.indexOf("localhost") > -1)||(window.location.href.indexOf("127.0.0.1") > -1)) 
 {
-	//document.getElementById('welcome-display').style.display = 'none';
+	document.getElementById('welcome-display').style.display = 'none';
 }
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("/sw.js")
-    .then(serviceWorker => {
-      console.log("Service Worker registered: ", serviceWorker);
-    })
-    .catch(error => {
-      console.error("Error registering the Service Worker: ", error);
-    });
-}
+
 
 </script>
 
@@ -581,7 +572,16 @@ document.querySelectorAll('.back').forEach(el=>{
 	});
 }) 
 
-
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/sw.js")
+    .then(serviceWorker => {
+      console.log("Service Worker registered: ", serviceWorker);
+    })
+    .catch(error => {
+      console.error("Error registering the Service Worker: ", error);
+    });
+}
 
 </script>
   
