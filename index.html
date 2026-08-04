@@ -235,6 +235,16 @@
   <a href="#home">Beranda</a>
   <a href="#" onclick="document.location.reload()">Refresh</a>
   <!-- <a href="#other">Another page</a> -->
+  <div style="position:absolute;bottom:10px;width:100%;">
+	<div style="padding:32px 32px;color: #818181;width:100%;">
+		<div style="border-bottom:0.1em solid #818181;display:block;width:100%;">
+			Kompas
+		</div>
+		<div style="font-size:0.5em;">
+			Versi : <span id="versi"></span> (Autoupdate)
+		</div>
+	</div>
+  </div>
 </div>
 
 <div id="main">
@@ -345,8 +355,6 @@ const res = await fetch(api);
 
 const data = await res.text();
 
-console.log(data);
-
 const r = data.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/);
 if (r && r.length == 2) {
 	const obj = JSON.parse(r[1]);
@@ -447,6 +455,14 @@ if (r && r.length == 2) {
 	router += `</my-router>`;
 	
 	document.getElementById('view').innerHTML = router;
+	
+	
+	//Versi
+	let arr = rows.map((item)=>item[3]);
+	arr.sort(function(a, b){return new Date(a) - new Date(b)});
+	let date = new Date(arr.pop());
+	let v = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`
+	document.getElementById('versi').innerHTML = v;
 	
 	
 }
