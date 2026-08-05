@@ -359,7 +359,7 @@ let deferredPrompt;
 const installBtn = document.getElementById('install-btn');
 const terinstallInfo = document.getElementById('terinstall-info');
 
-if(localStorage.getItem("install")){
+if(localStorage.getItem("install") === "true"){
 	terinstallInfo.innerText = 'Aplikasi sudah terinstall';
 }
 
@@ -392,7 +392,7 @@ installBtn.addEventListener('click', async () => {
   
   // Hide your custom button again
   installBtn.style.display = 'none';
-  localStorage.setItem("install",false)
+  localStorage.setItem("install","false")
 });
 
 // 3. Optional: Hide button if the app is successfully installed
@@ -401,10 +401,10 @@ window.addEventListener('appinstalled', () => {
   installBtn.style.display = 'none';
   terinstallInfo.innerText = 'Sedang menginstall ...';
   deferredPrompt = null;
-  localStorage.setItem("install",true);
+  localStorage.setItem("install","true");
 	setTimeout(()=>{
 		terinstallInfo.innerText = 'Install sukses';
-	},20*1000)  
+	},40*1000)  
 });
 
 // Check if the app is running standalone (installed)
