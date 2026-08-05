@@ -228,7 +228,7 @@
   <div style="background:#fff;display: flex;flex-direction:column;margin: auto;align-items: center;justify-content: center;padding:20px 20px;">
     <img src="logo.png" style="width:200px;height:300px;object-fit: contain;background-image:none;">
     <p style="font-size:16px;font-weight:bold;text-align:center;width:300px;margin-top:15px;margin-bottom:2px;display:none;">KOMPAS</p>
-    <p><button id="install-btn" style="display:none;font-size:var(--autosizehalf);" target="_blank">Install</button></p><p id="terinstall-info" style="display:none;font-size:var(--autosizehalf);">Sedang menginstall ...</p>
+    <p><button id="install-btn" style="display:none;font-size:var(--autosizehalf);" target="_blank">Install</button></p><p id="terinstall-info" style="font-size:var(--autosizehalf);">Loading ...</p>
   </div>
 </div>
 
@@ -359,6 +359,10 @@ let deferredPrompt;
 const installBtn = document.getElementById('install-btn');
 const terinstallInfo = document.getElementById('terinstall-info');
 
+if(localStorage.getItem("install")){
+	terinstallInfo.innerText = 'Aplikasi sudah terinstall';
+}
+
 // 1. Listen for the browser's built-in install invitation
 window.addEventListener('beforeinstallprompt', (e) => {
   // Prevent older Chrome versions from automatically showing the prompt
@@ -369,6 +373,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   
   // Unhide your custom install button
   installBtn.style.display = 'block';
+  terinstallInfo.innerText = '';
 });
 
 // 2. Handle the user clicking your custom button
@@ -387,14 +392,19 @@ installBtn.addEventListener('click', async () => {
   
   // Hide your custom button again
   installBtn.style.display = 'none';
+  localStorage.setItem("install",false)
 });
 
 // 3. Optional: Hide button if the app is successfully installed
 window.addEventListener('appinstalled', () => {
   console.log('PWA was successfully installed!');
   installBtn.style.display = 'none';
-  terinstallInfo.style.display = 'block';
+  terinstallInfo.innerText = 'Sedang menginstall ...';
   deferredPrompt = null;
+  localStorage.setItem("install",true);
+	setTimeout(()=>{
+		terinstallInfo.innerText = 'Install sukses';
+	},20*1000)  
 });
 
 // Check if the app is running standalone (installed)
@@ -407,8 +417,6 @@ if ((window.location.href.indexOf("localhost") > -1)||(window.location.href.inde
 {
 	document.getElementById('welcome-display').style.display = 'none';
 }
-
-
 
 
 
