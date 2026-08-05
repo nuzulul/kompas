@@ -374,6 +374,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   // Unhide your custom install button
   installBtn.style.display = 'block';
   terinstallInfo.innerText = '';
+  localStorage.setItem("install","false");
 });
 
 // 2. Handle the user clicking your custom button
@@ -392,7 +393,7 @@ installBtn.addEventListener('click', async () => {
   
   // Hide your custom button again
   installBtn.style.display = 'none';
-  localStorage.setItem("install","false")
+  
 });
 
 // 3. Optional: Hide button if the app is successfully installed
